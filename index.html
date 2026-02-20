@@ -20,7 +20,37 @@
             </div>
         </header>
         <div class="form-container">
+            <h2>Add a Book:</h2>
+            <form id="add-form">
 
+                <label for="input-title">* Title</label>
+                <input class="text" type="text" id="input-title" placeholder="e.g. Game of Thrones" required>
+
+                <label for="input-author">* Author</label>
+                <input class="text" type="text" id="input-author" placeholder="George R. R. Martin" required>
+
+                <div class="radio-row">
+                    <label><input name="genre" type="radio" value="fiction" checked> Fiction</label>
+                    <label><input name="genre" type="radio" value="non-fiction"> Non-Fiction</label>
+                </div>
+                <div class="notes-column">
+                    <label for="input-notes">Personal Notes</label>
+                    <textarea class="inp-notes" id="input-notes"
+                        placeholder="Thoughts, quotes, reminders..."></textarea>
+                </div>
+
+                <div class="checkbox-grid">
+                    <label><input type="checkbox" id="input-audible"> 🎧 Audible</label>
+                    <label><input type="checkbox" id="input-purchased"> 🛒 Purchased</label>
+                    <label><input type="checkbox" id="input-borrowed"> 🤝 Borrowed</label>
+                    <label><input type="checkbox" id="input-lib"> 🏛️ From Library</label>
+                </div>
+
+                <div class="radio-row">
+                    <label><input name="read" type="radio" value="read" checked> Read</label>
+                    <label><input name="read" type="radio" value="unread"> Unread</label>
+                </div>
+            </form>
         </div>
     </div>
     <script src="script.js"></script>

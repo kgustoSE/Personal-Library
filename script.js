@@ -4,7 +4,7 @@ let personalLibrary = [];
 // Constructor --> Creates the blueprint for what can be placed in our array
 // did some research and the moddern class method automatically places the protypeing correctly
 class Book {
-    constructor(title, author, notes, type, acquired, read, recommended) {
+    constructor(title, author, notes, type, acquired, read) {
         this.id = Date.now();
         this.title = title;
         this.author = author;
@@ -12,7 +12,6 @@ class Book {
         this.type = type;
         this.acquired = acquired;
         this.read = read;
-        this.recommended = recommended;
     }
 }
 

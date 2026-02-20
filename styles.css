@@ -1,4 +1,6 @@
-* ::before ::after {
+*,
+*::before,
+*::after {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -11,22 +13,70 @@
 
 .main-container {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 2fr;
+    grid-template-columns: 570px 1fr;
+    grid-template-rows: auto 1fr;
+    min-height: 100vh;
     grid-template-areas:
-        "header add"
-        "library library";
+        "header library"
+        "add    library";
+}
 
+.header-container,
+.form-container {
+    width: 100%;
 }
 
 .header-container {
+    background-color: green;
     grid-area: header;
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 1rem;
+
+    padding-top: 2rem;
+}
+
+p {
+    width: 20rem;
+    flex-wrap: wrap;
+    line-height: 1.3rem;
 }
 
 .form-container {
+    background-color: green;
+
     grid-area: add;
+    width: max-content;
+    padding: 1rem;
+    padding-top: 2rem;
+}
+
+.notes-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.inp-notes {
+    height: 3rem;
+    width: auto;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    padding-top: 0.3rem;
+    padding-bottom: 0.3rem;
+}
+
+.checkbox-grid,
+.radio-row {
+    padding-top: 0.4rem;
+    padding-bottom: 0.4rem;
+}
+
+.text {
+    width: 202px;
 }
