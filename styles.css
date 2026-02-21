@@ -1,14 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Cardo:wght@400;700&family=Poppins:wght@300;400;700;800&display=swap');
+
+:root {
+    --font-base: "Poppins", sans-serif;
+    --font-color: #f0ebe0;
+    --header-color: #2d4a3e;
+    --library-color: #faf7f2;
+    --text-primary: #1a1a2e;
+    --border-color: #fdf4f7;
+    --border-color-input: #976c34;
+}
+
 *,
 *::before,
 *::after {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: var(--font-base);
+    color: var(--font-color);
 }
 
 .img {
     height: 15rem;
     width: 15rem;
+}
+
+.header-container p {
+    opacity: 0.75;
 }
 
 .main-container {
@@ -21,18 +39,13 @@
         "add    library";
 }
 
-.header-container,
-.form-container {
-    width: 100%;
-}
-
 .header-container {
-    background-color: green;
+    background-color: var(--header-color);
     grid-area: header;
     display: flex;
     flex-direction: row;
     align-items: center;
-
+    width: 100vw;
     padding-top: 2rem;
 }
 
@@ -43,12 +56,14 @@ p {
 }
 
 .form-container {
-    background-color: green;
-
+    background-color: var(--header-color);
     grid-area: add;
     width: max-content;
     padding: 1rem;
     padding-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
 }
 
 .notes-column {
@@ -61,22 +76,121 @@ p {
     width: auto;
 }
 
-.form-container {
-    display: flex;
-    flex-direction: column;
-}
-
 label {
-    padding-top: 0.3rem;
-    padding-bottom: 0.3rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    font-size: 0.78rem;
+    opacity: 0.85;
 }
 
 .checkbox-grid,
 .radio-row {
-    padding-top: 0.4rem;
-    padding-bottom: 0.4rem;
+    display: flex;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    gap: 1rem;
 }
 
 .text {
-    width: 202px;
+    display: flex;
+    width: 100%;
+    height: 2rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-radius: 0.4rem;
+
+}
+
+.library-container {
+    grid-area: library;
+    background-color: var(--library-color);
+}
+
+
+.text::placeholder,
+.inp-notes::placeholder {
+    color: #8a7e6e;
+    opacity: 0.65;
+    font-size: 0.75rem;
+}
+
+input,
+textarea {
+    padding-left: 0.4rem;
+    color: var(--text-primary);
+    font-size: 0.8rem;
+}
+
+textarea {
+    padding-top: 0.2rem;
+    border-radius: 0.4rem;
+    resize: vertical;
+    overflow: auto;
+    max-height: 400px;
+    min-height: 60px;
+    cursor: default;
+}
+
+input[type="text"],
+textarea {
+    border-style: solid;
+    border-width: 2px;
+    border-color: var(--border-color);
+}
+
+input[type="text"]:focus,
+textarea:focus {
+    outline: none;
+    border-style: solid;
+    border-width: 3px;
+    border-color: var(--border-color-input);
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+    accent-color: var(--border-color-input);
+    cursor: pointer;
+}
+
+button[type="submit"] {
+    margin-top: 1.2rem;
+    width: 100%;
+    padding: 0.65rem 1.2rem;
+    background-color: #c17f3a;
+    color: #fdf9f4;
+    border: none;
+    border-radius: 6px;
+    font-family: var(--font-base);
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s, box-shadow 0.2s;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+button[type="submit"]:hover {
+    background-color: #a3672c;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+}
+
+button[type="submit"]:active {
+    transform: translateY(2px);
+    box-shadow: none;
+}
+
+.card {
+    height: 500px;
+    width: 500px;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    font-weight: 700;
+    background-color: white;
+    margin: 3rem;
+    padding: 2rem;
+
 }
