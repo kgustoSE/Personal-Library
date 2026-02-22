@@ -7,7 +7,8 @@
     --library-color: #faf7f2;
     --text-primary: #1a1a2e;
     --border-color: #fdf4f7;
-    --border-color-input: #976c34;
+    --border-color-input: #f77c7c;
+    --border-color-input-focus: #f38989;
 }
 
 *,
@@ -105,7 +106,14 @@ label {
 }
 
 .library-container {
+    position: relative;
     grid-area: library;
+    grid-row: span 2;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1rem;
+    padding: 2rem;
+    align-content: start;
     background-color: var(--library-color);
 }
 
@@ -159,8 +167,8 @@ button[type="submit"] {
     margin-top: 1.2rem;
     width: 100%;
     padding: 0.65rem 1.2rem;
-    background-color: #c17f3a;
-    color: #fdf9f4;
+    background-color: var(--border-color-input);
+    color: var(--text-primary);
     border: none;
     border-radius: 6px;
     font-family: var(--font-base);
@@ -174,7 +182,7 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-    background-color: #a3672c;
+    background-color: var(--border-color-input-focus);
     box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
 }
 
@@ -193,4 +201,35 @@ button[type="submit"]:active {
     margin: 3rem;
     padding: 2rem;
 
+}
+
+
+.empty-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.9rem;
+    width: 100%;
+    padding: 2rem;
+}
+
+.empty-sub,
+.empty-hint {
+    flex-wrap: nowrap;
+    width: 100%;
+    color: var(--text-primary);
+}
+
+.empty-heading {
+    color: var(--text-primary);
+    font-size: 2rem;
+}
+
+.empty-icon {
+    font-size: 2rem;
 }
