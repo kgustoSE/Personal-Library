@@ -85,7 +85,7 @@ function renderLibrary() {
 
         const emptySub = document.createElement(`p`);
         emptySub.className = `empty-sub`;
-        emptySub.textContent = `The gnomes are waiting to tend your collection. Add your first book and let the library bloom.`;
+        emptySub.textContent = `The gnomes are waiting to tend to your collection. Add your first book and let the library bloom.`;
 
         const emptyHint = document.createElement(`p`);
         emptyHint.className = `empty-hint`;
@@ -97,7 +97,114 @@ function renderLibrary() {
         emptyContainer.appendChild(emptyHint);
         bookList.appendChild(emptyContainer);
         return;
-
     }
+
+    personalLibrary.forEach(book => {
+        bookList.appendChild(buildCard(book));
+    });
 }
+
+// build cards out
+
+function buildCard(book) {
+    const card = document.createElement('div');
+    card.className = book.read === `read` ? `card card-read` : `card card-unread`;
+
+    const title = document.createElement('p');
+    title.textContent = book.title;
+    title.className = 'book-title';
+
+    const author = document.createElement('p');
+    author.textContent = 'Written By: ' + book.author;
+    author.className = 'book-author';
+
+    const notes = document.createElement('p');
+    if (book.notes) {
+        notes.className = 'book-notes';
+        notes.textContent = book.notes;
+    }
+
+    const coverWrapper = document.createElement('div');
+    coverWrapper.className = 'cover-wrapper';
+
+    const cover = document.createElement('img');
+    cover.alt = book.title;
+    cover.className = 'book-cover';
+    cover.style.width = `50%`
+    cover.style.height = `260px`;
+
+
+    const coverText = document.createElement('div');
+    coverText.textContent = 'No Cover Found';
+    coverText.className = 'cover-placeholder';
+    coverText.style.display = 'none';
+    coverText.style.width = `60%`;
+    coverText.style.height = `250px`;
+
+    const searchTitle = encodeURIComponent(book.title);
+    cover.src = `https://covers.openlibrary.org/b/title/${searchTitle}-L.jpg`;
+
+    cover.addEventListener('load', () => {
+        if (cover.naturalWidth <= 1) {
+            cover.style.display = 'none';
+            coverText.style.display = 'flex';
+        }
+    });
+
+    cover.addEventListener('error', () => {
+        cover.style.display = 'none';
+        coverText.style.display = 'flex';
+    });
+
+
+    const badgeRow = document.createElement('div');
+    badgeRow.className = 'badge-row';
+
+    const genreBadge = document.createElement('span');
+    genreBadge.className = 'badge badge-genre';
+    genreBadge.textContent = book.genre === 'fiction' ? '📖 Fiction' : '📊 Non-Fiction';
+    badgeRow.appendChild(genreBadge);
+
+    if (book.type.audible) { const b = document.createElement('span'); b.className = 'badge badge-type'; b.textContent = '🎧 Audible'; badgeRow.appendChild(b); }
+    if (book.type.purchased) { const b = document.createElement('span'); b.className = 'badge badge-type'; b.textContent = '🛒 Purchased'; badgeRow.appendChild(b); }
+    if (book.type.borrowed) { const b = document.createElement('span'); b.className = 'badge badge-type'; b.textContent = '🤝 Borrowed'; badgeRow.appendChild(b); }
+    if (book.type.lib) { const b = document.createElement('span'); b.className = 'badge badge-type'; b.textContent = '🏛️ From Library'; badgeRow.appendChild(b); }
+
+    const readBadge = document.createElement('span');
+    readBadge.className = book.read === 'read' ? 'badge badge-read' : 'badge badge-unread';
+    readBadge.textContent = book.read === 'read' ? '✅ Read' : '❌ Unread';
+    readBadge.style.cursor = 'pointer';
+    readBadge.addEventListener('click', () => {
+        const found = personalLibrary.find(b => b.id === book.id);
+        if (found) {
+            found.read = found.read === 'read' ? 'unread' : 'read';
+            saveLibrary();
+            renderLibrary();
+        }
+    });
+    card.appendChild(readBadge);
+
+
+    const deleteBtn = document.createElement('button');
+    deleteBtn.textContent = '✕';
+    deleteBtn.className = 'delete-btn';
+    deleteBtn.addEventListener('click', () => {
+        personalLibrary = personalLibrary.filter(b => b.id !== book.id);
+        saveLibrary();
+        renderLibrary();
+    });
+
+    card.appendChild(title);
+    coverWrapper.appendChild(cover);
+    coverWrapper.appendChild(coverText);
+    card.appendChild(coverWrapper);
+    card.appendChild(author);
+    card.appendChild(badgeRow);
+    if (book.notes) card.appendChild(notes);
+    card.appendChild(deleteBtn);
+
+    return card;
+}
+
+loadLibrary();
 renderLibrary();
