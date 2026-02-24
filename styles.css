@@ -46,12 +46,20 @@
     transition: all 0.2s;
 }
 
+.filter-btn::selection {
+    background-color: #ec0000;
+}
+
 .filter-btn:hover {
     background-color: var(--font-color);
 }
 
 .filter-btn:active {
     transform: scale(92%);
+}
+
+.filter-btn.active {
+    background-color: var(--border-color-input);
 }
 
 .header-container .img {
@@ -70,7 +78,8 @@
     min-height: 100vh;
     grid-template-areas:
         "header library"
-        "add    library";
+        "add library"
+        "footer library";
 }
 
 .header-container {
@@ -212,6 +221,16 @@ button[type="submit"]:active {
     box-shadow: none;
 }
 
+.copyright {
+    background-color: var(--header-color);
+    grid-area: footer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+
+}
+
 
 .empty-container {
     position: absolute;
@@ -249,13 +268,14 @@ button[type="submit"]:active {
 .library-container {
     position: relative;
     grid-area: library;
-    grid-row: span 2;
+    grid-row: span 3;
     background-color: var(--library-color);
     background-image:
         url('img/Gnome-reading.png');
     background-repeat: no-repeat;
     background-position: bottom center;
     background-size: 300px auto;
+    min-height: 100vh;
 }
 
 #book-list {
@@ -412,6 +432,7 @@ button[type="submit"]:active {
             "header"
             "add"
             "library"
+            "footer"
         ;
     }
 
