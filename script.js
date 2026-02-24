@@ -1,8 +1,6 @@
-// Modifiable Variable Array
 let personalLibrary = [];
+let activeFilter = 'all';
 
-// Constructor --> Creates the blueprint for what can be placed in our array
-// did some research and the moddern class method automatically places the protypeing correctly
 class Book {
     constructor(title, author, genre, notes, audible, purchased, borrowed, lib, read) {
         this.id = Date.now();
@@ -15,38 +13,43 @@ class Book {
     }
 }
 
-// Save -- Load Functions
 function saveLibrary() {
-    localStorage.setItem(`my-library`, JSON.stringify(personalLibrary));
+    localStorage.setItem('my-library', JSON.stringify(personalLibrary));
 }
 
 function loadLibrary() {
-    const saved = localStorage.getItem(`my-library`);
+    const saved = localStorage.getItem('my-library');
     if (!saved) return;
-
-    personalLibrary = JSON.parse(saved)
-
+    personalLibrary = JSON.parse(saved);
 }
 
 // Grab HTML elements
-
-const form = document.getElementById(`add-form`);
-const bookList = document.getElementById(`library-container`);
-const inputTitle = document.getElementById(`input-title`);
-const inputAuthor = document.getElementById(`input-author`);
-const inputNotes = document.getElementById(`input-notes`);
+const form = document.getElementById('add-form');
+const bookList = document.getElementById('book-list'); // fixed
+const inputTitle = document.getElementById('input-title');
+const inputAuthor = document.getElementById('input-author');
+const inputNotes = document.getElementById('input-notes');
 const inputAudible = document.getElementById('input-audible');
 const inputPurchased = document.getElementById('input-purchased');
 const inputBorrowed = document.getElementById('input-borrowed');
 const inputLib = document.getElementById('input-lib');
 
-// submit form
+// Filter buttons
+document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeFilter = btn.dataset.filter;
+        renderLibrary();
+    });
+});
 
-form.addEventListener(`submit`, (event) => {
+// Submit form
+form.addEventListener('submit', (event) => {
     event.preventDefault();
 
-    const genre = document.querySelector(`input[name="genre"]:checked`).value;
-    const read = document.querySelector(`input[name="read"]:checked`).value;
+    const genre = document.querySelector('input[name="genre"]:checked').value;
+    const read = document.querySelector('input[name="read"]:checked').value;
 
     const newBook = new Book(
         inputTitle.value.trim(),
@@ -66,30 +69,34 @@ form.addEventListener(`submit`, (event) => {
     form.reset();
 });
 
-// render the library to build the cards
-
+// Render
 function renderLibrary() {
-    bookList.textContent = ``;
+    bookList.textContent = '';
 
-    if (personalLibrary.length === 0) {
-        const emptyContainer = document.createElement(`div`);
-        emptyContainer.className = `empty-container`;
+    const filtered = personalLibrary.filter(book => {
+        if (activeFilter === 'all') return true;
+        return book.read === activeFilter;
+    });
 
-        const gnome = document.createElement(`p`);
-        gnome.className = `empty-icon`;
+    if (filtered.length === 0) {
+        const emptyContainer = document.createElement('div');
+        emptyContainer.className = 'empty-container';
+
+        const gnome = document.createElement('p');
+        gnome.className = 'empty-icon';
         gnome.textContent = '🌿 📚 🍄';
 
-        const emptyHeading = document.createElement(`h2`);
-        emptyHeading.className = `empty-heading`;
-        emptyHeading.textContent = `Your shelf is empty...`;
+        const emptyHeading = document.createElement('h2');
+        emptyHeading.className = 'empty-heading';
+        emptyHeading.textContent = 'Your shelf is empty...';
 
-        const emptySub = document.createElement(`p`);
-        emptySub.className = `empty-sub`;
-        emptySub.textContent = `The gnomes are waiting to tend to your collection. Add your first book and let the library bloom.`;
+        const emptySub = document.createElement('p');
+        emptySub.className = 'empty-sub';
+        emptySub.textContent = 'The gnomes are waiting to tend to your collection. Add your first book and let the library bloom.';
 
-        const emptyHint = document.createElement(`p`);
-        emptyHint.className = `empty-hint`;
-        emptyHint.textContent = `✨ Use the form to plant your first book ✨`
+        const emptyHint = document.createElement('p');
+        emptyHint.className = 'empty-hint';
+        emptyHint.textContent = '✨ Use the form to plant your first book ✨';
 
         emptyContainer.appendChild(gnome);
         emptyContainer.appendChild(emptyHeading);
@@ -99,16 +106,15 @@ function renderLibrary() {
         return;
     }
 
-    personalLibrary.forEach(book => {
+    filtered.forEach(book => {
         bookList.appendChild(buildCard(book));
     });
 }
 
-// build cards out
-
+// Build card
 function buildCard(book) {
     const card = document.createElement('div');
-    card.className = book.read === `read` ? `card card-read` : `card card-unread`;
+    card.className = book.read === 'read' ? 'card card-read' : 'card card-unread';
 
     const title = document.createElement('p');
     title.textContent = book.title;
@@ -130,16 +136,15 @@ function buildCard(book) {
     const cover = document.createElement('img');
     cover.alt = book.title;
     cover.className = 'book-cover';
-    cover.style.width = `50%`
-    cover.style.height = `260px`;
-
+    cover.style.width = '50%';
+    cover.style.height = '260px';
 
     const coverText = document.createElement('div');
     coverText.textContent = 'No Cover Found';
     coverText.className = 'cover-placeholder';
     coverText.style.display = 'none';
-    coverText.style.width = `60%`;
-    coverText.style.height = `250px`;
+    coverText.style.width = '60%';
+    coverText.style.height = '250px';
 
     const searchTitle = encodeURIComponent(book.title);
     cover.src = `https://covers.openlibrary.org/b/title/${searchTitle}-L.jpg`;
@@ -155,7 +160,6 @@ function buildCard(book) {
         cover.style.display = 'none';
         coverText.style.display = 'flex';
     });
-
 
     const badgeRow = document.createElement('div');
     badgeRow.className = 'badge-row';
@@ -182,8 +186,6 @@ function buildCard(book) {
             renderLibrary();
         }
     });
-    card.appendChild(readBadge);
-
 
     const deleteBtn = document.createElement('button');
     deleteBtn.textContent = '✕';
@@ -194,6 +196,7 @@ function buildCard(book) {
         renderLibrary();
     });
 
+    card.appendChild(readBadge);
     card.appendChild(title);
     coverWrapper.appendChild(cover);
     coverWrapper.appendChild(coverText);

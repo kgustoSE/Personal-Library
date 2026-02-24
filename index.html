@@ -11,6 +11,11 @@
 <body>
     <div class="main-container">
         <header>
+            <div class="filter-bar">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="read">✅ Read</button>
+                <button class="filter-btn" data-filter="unread">❌ Unread</button>
+            </div>
             <div class="header-container">
                 <img class="img" src="img/House of Books.png" alt="Floral gnomes book library logo">
                 <div class="text-container">
@@ -51,11 +56,18 @@
                     <label><input name="read" type="radio" value="unread"> Unread</label>
                 </div>
                 <button type="submit">Add to Shelf</button>
+
             </form>
         </div>
         <div id="library-container" class="library-container">
-
+            <div id="book-list"></div>
         </div>
+
+
+    </div>
+
+
+    </div>
     </div>
     <script src="script.js"></script>
 </body>

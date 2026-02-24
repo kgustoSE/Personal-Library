@@ -23,7 +23,38 @@
     color: var(--font-color);
 }
 
-.img {
+.filter-bar {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0.2rem;
+    background-color: var(--header-color);
+    gap: 0.2rem;
+}
+
+.filter-btn {
+    padding: 0.2rem 1rem;
+    border: 2px solid var(--header-color);
+    border-radius: 8px;
+    background-color: var(--library-color);
+    color: var(--text-primary);
+    font-family: var(--font-base);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.filter-btn:hover {
+    background-color: var(--font-color);
+}
+
+.filter-btn:active {
+    transform: scale(92%);
+}
+
+.header-container .img {
     height: 15rem;
     width: 15rem;
 }
@@ -219,12 +250,20 @@ button[type="submit"]:active {
     position: relative;
     grid-area: library;
     grid-row: span 2;
+    background-color: var(--library-color);
+    background-image:
+        url('img/Gnome-reading.png');
+    background-repeat: no-repeat;
+    background-position: bottom center;
+    background-size: 300px auto;
+}
+
+#book-list {
     display: grid;
-    grid-template-columns: repeat(auto-fill, 420px);
+    grid-template-columns: repeat(auto-fill, 400px);
     gap: 2.5rem;
     padding: 2rem;
     align-content: start;
-    background-color: var(--library-color);
 }
 
 .delete-btn {
@@ -254,7 +293,7 @@ button[type="submit"]:active {
     flex-direction: column;
     gap: 0.5rem;
     height: 600px;
-    width: 420px;
+    width: 410px;
     color: var(--text-primary);
     text-transform: uppercase;
     font-weight: 700;
@@ -361,4 +400,55 @@ button[type="submit"]:active {
     text-align: left;
     line-height: 1.6;
     font-style: italic;
+}
+
+/* Responsivness */
+
+@media (max-width: 1024px) {
+    .main-container {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+        grid-template-areas:
+            "header"
+            "add"
+            "library"
+        ;
+    }
+
+    .header-container {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        width: 100vw;
+        padding-bottom: 1rem;
+    }
+
+    .filter-bar {
+        justify-content: center;
+        align-items: center;
+        padding-top: 0.3rem;
+        margin: 0;
+    }
+
+    .library-container {
+        grid-row: span 1;
+
+    }
+
+    #book-list {
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+
+    }
+}
+
+@media (max-width: 812px) {
+    #book-list {
+        margin: 0;
+        padding: 0.5rem;
+        justify-items: center;
+    }
+
+    .card {
+        width: 95%
+    }
 }
